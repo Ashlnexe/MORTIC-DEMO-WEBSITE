@@ -1,25 +1,26 @@
-import Link from "next/link";
+"use client";
 import { Star } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
-export default function ProductCard({
-  title,
-  salePrice,
-  originalPrice,
-  rating,
-  badges = [],
-}) {
+export default function ProductCard({ product, onQuickView }) {
+  const { title, salePrice, originalPrice, rating, badges = [], slug, image } = product;
+
   return (
-    <div className="flex flex-col group snap-start sm:snap-center">
-      {/* Image Container with 4:5 Aspect Ratio */}
-      <div className="relative w-full aspect-[4/5] bg-gray-200 overflow-hidden">
-        {/* Placeholder Text */}
-        <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-sm">
-          Image Placeholder
-        </div>
-
+    <div className="group flex flex-col shrink-0 w-[70vw] md:w-full snap-start relative">
+      {/* Image Container - Links to Product Page */}
+      <div className="relative w-full aspect-[4/5] bg-[#f9f9f9] flex items-center justify-center overflow-hidden">
+        <Link href={`/product/${slug}`} className="absolute inset-0 z-0 flex items-center justify-center">
+          {image ? (
+            <Image src={image} alt={title} fill className="object-cover object-center" />
+          ) : (
+            <span className="text-gray-400 text-sm">Image</span>
+          )}
+        </Link>
+        
         {/* Badges */}
         {badges.length > 0 && (
-          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10 pointer-events-none">
             {badges.map((badge, idx) => (
               <span
                 key={idx}
@@ -31,39 +32,36 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Hover / Mobile Persistent Button */}
-        <div className="absolute bottom-0 left-0 w-full p-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <button className="w-full bg-black text-white text-sm font-semibold uppercase py-3 hover:bg-gray-900">
-            Choose Options
+        {/* Hover Button - Triggers Modal */}
+        <div className="absolute bottom-4 left-4 right-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 z-20">
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              onQuickView(product);
+            }}
+            className="w-full bg-white text-black font-bold uppercase text-xs py-3 border border-gray-200 hover:border-black transition-colors shadow-sm"
+          >
+            Choose options
           </button>
         </div>
       </div>
 
-      {/* Product Details */}
-      <div className="mt-3 flex flex-col">
-        {/* Strictly lowercase title */}
-        <Link href="#" className="text-sm font-bold text-black lowercase mb-1 hover:underline">
-          {title}
-        </Link>
-        
-        {/* Pricing & Rating Flexbox */}
-        <div className="flex items-center justify-between mt-1">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-black">
-              {salePrice}
-            </span>
+      {/* Details - Links to Product Page */}
+      <Link href={`/product/${slug}`} className="pt-3 pb-1 block">
+        <h3 className="text-sm font-semibold lowercase text-black truncate hover:underline">{title}</h3>
+        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mt-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-bold text-black whitespace-nowrap">{salePrice}</span>
             {originalPrice && (
-              <span className="text-xs text-gray-500 line-through">
-                {originalPrice}
-              </span>
+              <span className="text-xs text-gray-500 line-through whitespace-nowrap">{originalPrice}</span>
             )}
           </div>
-          <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 fill-black text-black" />
-            <span className="text-xs font-semibold">{rating}</span>
+          <div className="flex items-center gap-1 shrink-0">
+            <Star className="w-3 h-3 fill-black text-black shrink-0" />
+            <span className="text-xs font-medium text-black whitespace-nowrap">{rating}</span>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

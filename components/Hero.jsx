@@ -1,21 +1,32 @@
+"use client";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[calc(100vh-64px)] flex items-center justify-center bg-gray-200">
-      {/* Background Image Placeholder */}
-      <div className="absolute inset-0 flex items-center justify-center text-gray-500 text-sm md:text-base">
-        Image Placeholder (Hero)
+    <section className="relative w-full h-screen bg-[#111] flex items-center justify-center flex-col overflow-hidden">
+      
+      {/* 
+        Hero Background Image:
+        Replace 'src' with a dark, moody photo of a blister pack or the ring 
+      */}
+      <div className="absolute inset-0 opacity-70 z-0">
+        <Image 
+          src="/hero-bw.jpg" 
+          alt="Mortic Hero"
+          fill
+          className="object-cover object-center"
+          priority
+        />
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
-        <h1 className="text-white text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-8 lowercase">
-          spring/summer
+      <div className="relative z-10 flex flex-col items-center gap-8 px-4 text-center mt-12">
+        <h1 className="text-5xl md:text-8xl font-black text-white lowercase tracking-tight drop-shadow-lg">
+          statement pieces
         </h1>
         <Link 
-          href="#"
-          className="bg-transparent border border-white text-white px-8 py-3 text-sm font-semibold uppercase tracking-widest hover:bg-white hover:text-black transition-colors duration-300"
+          href="/shop" 
+          className="border-2 border-white text-white bg-transparent px-10 py-4 text-sm font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300"
         >
           Shop Collection
         </Link>

@@ -1,5 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/CartDrawer";
+
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -7,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "WearADHD",
-  description: "Streetwear brand clone.",
+  title: "Mortic™",
+  description: "Streetwear brand.",
 };
 
 export default function RootLayout({ children }) {
@@ -17,7 +21,15 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-black font-sans">{children}</body>
+      <body className="flex flex-col min-h-screen bg-white text-black font-sans">
+        <CartProvider>
+          <div className="flex-grow">
+            {children}
+          </div>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
+      </body>
     </html>
   );
 }
