@@ -1,30 +1,54 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Menu, Search, ShoppingBag, User, X, ArrowRight } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, X, ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchInputRef = useRef(null);
-  
-  const pathname = usePathname();
-  const { toggleCart, cartCount } = useCart();
-  
-  const isHome = pathname === "/";
-  const shouldBeSolid = isScrolled || !isHome;
 
-  // Track scroll position for navbar color change
+  // --- TOP BAR CAROUSEL & AUDIO STATE ---
+  const [topBarIndex, setTopBarIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const topBarSlides = [
+    { type: "text", content: "CASH ON DELIVERY AVAILABLE" },
+    { type: "music", track: "Pink + White", artist: "Frank Ocean" } // Change to your desired track
+  ];
+
+  // Auto-rotate the top bar every 4 seconds (unless music is playing)
+  useEffect(() => {
+    if (isPlaying) return; // Don't auto-rotate away if they are listening to the song
+    
+    const interval = setInterval(() => {
+      setTopBarIndex((prev) => (prev + 1) % topBarSlides.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPlaying, topBarSlides.length]);
+
+  const nextSlide = () => setTopBarIndex((prev) => (prev + 1) % topBarSlides.length);
+  const prevSlide = () => setTopBarIndex((prev) => (prev - 1 + topBarSlides.length) % topBarSlides.length);
+
+  const togglePlay = (e) => {
+    e.stopPropagation(); // Prevent the click from bubbling up
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  // --- SCROLL & MODAL LOGIC ---
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent background scrolling when ANY modal is open
   useEffect(() => {
     if (isMobileMenuOpen || isSearchOpen) {
       document.body.style.overflow = 'hidden';
@@ -33,7 +57,6 @@ export default function Navbar() {
     }
   }, [isMobileMenuOpen, isSearchOpen]);
 
-  // Autofocus the search input when it opens
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
       setTimeout(() => searchInputRef.current.focus(), 100);
@@ -41,28 +64,67 @@ export default function Navbar() {
   }, [isSearchOpen]);
 
   const openSearch = () => {
-    setIsMobileMenuOpen(false); // Close mobile menu if it was open
+    setIsMobileMenuOpen(false);
     setIsSearchOpen(true);
   };
 
   return (
     <>
+      {/* Hidden Audio Element */}
+      <audio 
+        ref={audioRef} 
+        src="/pink-white-snippet.mp3" // Ensure this file is in your public/ folder
+        onEnded={() => setIsPlaying(false)}
+      />
+
       {/* ========================================== */}
       {/* MAIN NAVBAR                                */}
       {/* ========================================== */}
       <header className={`fixed top-0 left-0 w-full z-40 transition-colors duration-300 ${
-          shouldBeSolid ? "bg-white text-black border-b border-gray-200 shadow-sm" : "bg-transparent text-white"
+          isScrolled ? "bg-white text-black border-b border-gray-200 shadow-sm" : "bg-transparent text-white"
         }`}
       >
-        <div className={`w-full bg-[#1a1a1a] text-white text-xs overflow-hidden whitespace-nowrap uppercase tracking-widest flex items-center transition-all duration-300 ${
+        {/* Interactive Top Announcement Bar */}
+        <div className={`w-full bg-[#1a1a1a] text-white text-xs flex items-center justify-between px-4 transition-all duration-300 overflow-hidden ${
             isScrolled ? "h-0 opacity-0" : "h-10 opacity-100"
           }`}
         >
-          <div className="animate-marquee inline-block w-full font-medium">
-            cash on delivery available • Free shipping on orders above Rp 500.000 • cash on delivery available • Free shipping on orders above Rp 500.000
+          <button onClick={prevSlide} className="p-2 hover:opacity-70 transition-opacity">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <div className="flex-1 h-full flex items-center justify-center overflow-hidden">
+            {topBarSlides[topBarIndex].type === "text" ? (
+              <span className="font-bold uppercase tracking-widest text-[10px] md:text-xs animate-in fade-in duration-500 text-center">
+                {topBarSlides[topBarIndex].content}
+              </span>
+            ) : (
+              /* The Music Player Slide */
+              <button 
+                onClick={togglePlay} 
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity animate-in fade-in duration-500 max-w-full overflow-hidden"
+              >
+                <div className={`w-2 h-2 rounded-full shrink-0 ${isPlaying ? "bg-red-500 animate-pulse" : "bg-gray-500"}`}></div>
+                
+                {/* Marquee effect for the song title so it "keeps moving" */}
+                <div className="relative flex overflow-hidden whitespace-nowrap w-[150px] md:w-[250px] mask-edges">
+                   <div className={`${isPlaying ? "animate-marquee" : ""} inline-block font-bold uppercase tracking-widest text-[10px] md:text-xs`}>
+                      <span className="mx-4">{topBarSlides[topBarIndex].track} · {topBarSlides[topBarIndex].artist}</span>
+                      <span className="mx-4">{topBarSlides[topBarIndex].track} · {topBarSlides[topBarIndex].artist}</span>
+                   </div>
+                </div>
+
+                {isPlaying ? <Pause className="w-3 h-3 shrink-0" /> : <Play className="w-3 h-3 shrink-0 ml-0.5" />}
+              </button>
+            )}
           </div>
+
+          <button onClick={nextSlide} className="p-2 hover:opacity-70 transition-opacity">
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
 
+        {/* Main Nav Links (Transparent -> White on scroll) */}
         <nav className="flex items-center justify-between px-4 py-4 md:px-8">
           <div className="flex md:hidden flex-shrink-0 w-[80px]">
             <Menu onClick={() => setIsMobileMenuOpen(true)} className="w-6 h-6 cursor-pointer hover:opacity-60 transition-opacity" />
@@ -82,16 +144,7 @@ export default function Navbar() {
           <div className="flex items-center justify-end gap-5 flex-shrink-0 w-[80px] md:w-auto">
             <User className="w-5 h-5 cursor-pointer hidden md:block hover:opacity-60 transition-opacity" />
             <Search onClick={openSearch} className="w-5 h-5 cursor-pointer hidden sm:block hover:opacity-60 transition-opacity" />
-            
-            {/* Kept original Cart logic intact */}
-            <div className="relative cursor-pointer hover:opacity-60 transition-opacity" onClick={toggleCart}>
-              <ShoppingBag className="w-5 h-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </div>
+            <ShoppingBag className="w-5 h-5 cursor-pointer hover:opacity-60 transition-opacity" />
           </div>
         </nav>
       </header>
@@ -100,7 +153,7 @@ export default function Navbar() {
       {/* MOBILE MENU DRAWER                         */}
       {/* ========================================== */}
       <div 
-        className={`fixed inset-0 bg-white z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-white z-[100] transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -137,7 +190,6 @@ export default function Navbar() {
           isSearchOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        {/* Search Header */}
         <div className="flex justify-between items-center p-4 md:p-8">
           <span className="text-xl md:text-2xl font-black uppercase tracking-tighter text-black">Search</span>
           <button onClick={() => setIsSearchOpen(false)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
@@ -145,13 +197,8 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Search Content */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 max-w-5xl mx-auto w-full -mt-20">
-          
-          <form 
-            className="w-full relative group" 
-            onSubmit={(e) => { e.preventDefault(); /* Handle search logic here */ }}
-          >
+          <form className="w-full relative group" onSubmit={(e) => e.preventDefault()}>
             <input
               ref={searchInputRef}
               type="text"
@@ -163,11 +210,10 @@ export default function Navbar() {
             </button>
           </form>
 
-          {/* Popular Searches */}
           <div className="w-full mt-16 flex flex-col gap-6">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Popular Searches</span>
             <div className="flex flex-wrap gap-3">
-              {['blond ring', 'audi quattro', 'porsche 911', 'skyline gtr', 'deadpool combo'].map((term) => (
+              {['blond ring', 'hot wheels', 'oasis definitely maybe', 'custom blister pack', 'stranger things'].map((term) => (
                 <button 
                   key={term} 
                   onClick={() => {
@@ -183,7 +229,6 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </>

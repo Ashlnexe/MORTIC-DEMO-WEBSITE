@@ -14,7 +14,8 @@ export const products = [
     track: {
       title: "Pink + White",
       artist: "Frank Ocean",
-      time: "03:04"
+      time: "03:04",
+      spotifyId: "3xKsf9qTXrCyauL95v1B5x"
     }
   },
   { 
@@ -32,7 +33,8 @@ export const products = [
     track: {
       title: "Self Control",
       artist: "Frank Ocean",
-      time: "04:09"
+      time: "04:09",
+      spotifyId: "5GIJ41jH6iYJv3L5W6Q7qA"
     }
   },
   { 
@@ -50,7 +52,8 @@ export const products = [
     track: {
       title: "VROOM VROOM",
       artist: "Charli XCX",
-      time: "03:13"
+      time: "03:13",
+      spotifyId: "5hyQ2LUIOqOinYm3YlZ867"
     }
   },
   { 
@@ -68,7 +71,8 @@ export const products = [
     track: {
       title: "911",
       artist: "Tyler, The Creator",
-      time: "03:34"
+      time: "03:34",
+      spotifyId: "4bHCOHqZ9QO6tY7M6w01H7"
     }
   },
   { 
@@ -86,7 +90,8 @@ export const products = [
     track: {
       title: "Tokyo Drift",
       artist: "Teriyaki Boyz",
-      time: "04:15"
+      time: "04:15",
+      spotifyId: "3U12M06P3O1H5rWjQ7eF9K"
     }
   },
   { 
@@ -104,7 +109,8 @@ export const products = [
     track: {
       title: "White Ferrari",
       artist: "Frank Ocean",
-      time: "04:08"
+      time: "04:08",
+      spotifyId: "2LMkwUfqC6S6s6qDVlEuzV"
     }
   },
   { 
@@ -122,7 +128,8 @@ export const products = [
     track: {
       title: "X Gon' Give It To Ya",
       artist: "DMX",
-      time: "03:38"
+      time: "03:38",
+      spotifyId: "1zzxoZVylsneKAH3gKj7tS"
     }
   }
 ];

@@ -133,28 +133,24 @@ export default function ProductPage({ params }) {
           </button>
 
 
-          {/* Spotify Box Mockup */}
+          {/* Actual Spotify Embed */}
           {product.track && (
-            <div className="border border-black bg-[#f3f4f6] p-6 mb-6">
+            <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
                 <span className="text-xs font-bold uppercase tracking-widest text-black">Behind this piece</span>
               </div>
-              <p className="text-lg font-bold italic text-black mb-4">
-                "{product.track.title}" by <span className="font-black">{product.track.artist}</span>
-              </p>
               
-              <div className="bg-[#0b4d45] rounded-xl p-3 flex items-center gap-3 w-full">
-                <div className="w-12 h-12 bg-white/20 rounded shrink-0"></div>
-                <div className="flex-1">
-                  <div className="text-white font-bold text-sm leading-tight">{product.track.title}</div>
-                  <div className="text-white/70 text-xs">{product.track.artist}</div>
-                </div>
-                <div className="text-white text-xs font-mono mr-2">{product.track.time}</div>
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                  <div className="w-0 h-0 border-t-4 border-t-transparent border-l-6 border-l-black border-b-4 border-b-transparent ml-1"></div>
-                </div>
-              </div>
+              <iframe
+                style={{ borderRadius: "12px" }}
+                src={`https://open.spotify.com/embed/track/${product.track.spotifyId}?utm_source=generator&theme=0`}
+                width="100%"
+                height="152"
+                frameBorder="0"
+                allowFullScreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe>
             </div>
           )}
 

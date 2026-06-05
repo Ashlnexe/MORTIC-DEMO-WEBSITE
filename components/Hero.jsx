@@ -12,7 +12,7 @@ export default function Hero() {
       */}
       <div className="absolute inset-0 opacity-70 z-0">
         <Image 
-          src="/hero-bw.jpg" 
+          src="/frank-ocean-flowers.png" 
           alt="Mortic Hero"
           fill
           className="object-cover object-center"

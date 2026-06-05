@@ -37,15 +37,30 @@ export default function AboutPage() {
 
         {/* Editorial Image Grid */}
         <div className="w-full lg:w-1/2 p-4 md:p-8 bg-white flex flex-col gap-4">
-          <div className="w-full aspect-video bg-gray-100 relative flex items-center justify-center border border-gray-200">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Workshop Photo 1</span>
+          <div className="w-full aspect-video bg-gray-100 relative overflow-hidden border border-gray-200">
+            <Image 
+              src="/bus-drawing.png" 
+              alt="Workshop Photo" 
+              fill 
+              className="object-cover" 
+            />
           </div>
           <div className="flex gap-4 h-64">
-            <div className="w-1/2 bg-gray-100 relative flex items-center justify-center border border-gray-200">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Detail 1</span>
+            <div className="w-1/2 bg-gray-100 relative overflow-hidden border border-gray-200">
+              <Image 
+                src="/bus-back.png" 
+                alt="Detail 1" 
+                fill 
+                className="object-cover" 
+              />
             </div>
-            <div className="w-1/2 bg-gray-100 relative flex items-center justify-center border border-gray-200">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Detail 2</span>
+            <div className="w-1/2 bg-gray-100 relative overflow-hidden border border-gray-200">
+              <Image 
+                src="/bus-front.jpg" 
+                alt="Detail 2" 
+                fill 
+                className="object-cover" 
+              />
             </div>
           </div>
         </div>
