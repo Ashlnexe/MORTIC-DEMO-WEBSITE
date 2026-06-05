@@ -15,9 +15,9 @@ export default function CollectionsPage() {
 
       {/* Collection 1 */}
       <div className="flex flex-col md:flex-row border-b border-gray-200">
-        <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-gray-100 relative border-b md:border-b-0 md:border-r border-gray-200">
+        <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-gray-100 relative overflow-hidden border-b md:border-b-0 md:border-r border-gray-200">
            {/* Replace with a lifestyle shot of the rings */}
-           <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold uppercase tracking-widest">Lookbook Image 1</div>
+           <Image src="/three-cars-bag.png" alt="Keychains Lifestyle Shot" fill className="object-cover" />
         </div>
         <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-[#f9f9f9]">
           <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 text-black">The Album Series</h2>
@@ -32,9 +32,9 @@ export default function CollectionsPage() {
 
       {/* Collection 2 (Alternating Layout) */}
       <div className="flex flex-col md:flex-row-reverse border-b border-gray-200">
-        <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-gray-100 relative border-b md:border-b-0 md:border-l border-gray-200">
+        <div className="w-full md:w-1/2 aspect-square md:aspect-auto bg-gray-100 relative overflow-hidden border-b md:border-b-0 md:border-l border-gray-200">
            {/* Replace with a shot of the Hot Wheels blister packs */}
-           <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold uppercase tracking-widest">Lookbook Image 2</div>
+           <Image src="/pink-car-store.png" alt="Blister Packs In Store" fill className="object-cover object-[center_30%]" />
         </div>
         <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-white">
           <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 text-black">Blister Packs</h2>

@@ -2,6 +2,7 @@
 import Navbar from "@/components/Navbar";
 import { Wrench, Package, Send } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CustomsPage() {
   return (
@@ -56,10 +57,10 @@ export default function CustomsPage() {
         {/* Right: Big Image Grid */}
         <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4">
            <div className="aspect-[4/5] bg-gray-800 rounded-sm relative overflow-hidden">
-              <span className="absolute inset-0 flex items-center justify-center text-gray-600 text-xs uppercase font-bold">Custom Work 1</span>
+              <Image src="/pink-car-hand.png" alt="Custom Pink Car" fill className="object-cover" />
            </div>
            <div className="aspect-[4/5] bg-gray-800 rounded-sm relative overflow-hidden mt-8">
-              <span className="absolute inset-0 flex items-center justify-center text-gray-600 text-xs uppercase font-bold">Custom Work 2</span>
+              <Image src="/beatles-sub.png" alt="Custom Beatles Submarine" fill className="object-cover" />
            </div>
         </div>
 
