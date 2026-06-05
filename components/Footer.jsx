@@ -5,6 +5,26 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#1a1a1a] text-white overflow-hidden flex flex-col mt-auto">
 
+      {/* Trust Signals Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-gray-800">
+        <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-gray-800 flex flex-col items-center text-center justify-center">
+          <h4 className="text-sm font-bold uppercase tracking-wider mb-2">Customer Service</h4>
+          <p className="text-sm text-gray-400">we're real people. we reply. we care.</p>
+        </div>
+        <div className="p-8 md:p-12 border-b md:border-b-0 lg:border-r border-gray-800 flex flex-col items-center text-center justify-center">
+          <h4 className="text-sm font-bold uppercase tracking-wider mb-2">Fast Dispatch</h4>
+          <p className="text-sm text-gray-400">orders are packed and shipped within 24-48 hours.</p>
+        </div>
+        <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-gray-800 flex flex-col items-center text-center justify-center">
+          <h4 className="text-sm font-bold uppercase tracking-wider mb-2">Worldwide Shipping</h4>
+          <p className="text-sm text-gray-400">we ship globally. wherever you are, we got you.</p>
+        </div>
+        <div className="p-8 md:p-12 flex flex-col items-center text-center justify-center">
+          <h4 className="text-sm font-bold uppercase tracking-wider mb-2">Secure Payment</h4>
+          <p className="text-sm text-gray-400">your payment information is processed securely.</p>
+        </div>
+      </div>
+
       {/* Big Typography Row */}
       <div className="w-full border-b border-gray-800 overflow-hidden flex items-center justify-center py-6 md:py-10">
         <h1 className="text-[18vw] md:text-[15vw] font-black tracking-tighter leading-none whitespace-nowrap select-none">
